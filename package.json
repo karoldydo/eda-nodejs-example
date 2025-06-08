@@ -1,0 +1,66 @@
+{
+  "name": "eda-nodejs-example",
+  "version": "0.0.1",
+  "description": "A simple event-driven architecture (EDA) example: online shop microservices in Node.js, Express.js, and TypeScript. Demonstrates asynchronous event-based communication between loosely coupled services.",
+  "keywords": [
+    "event-driven",
+    "eda",
+    "microservices",
+    "nodejs",
+    "express",
+    "typescript",
+    "example",
+    "demo",
+    "architecture",
+    "eventbus",
+    "online-shop"
+  ],
+  "homepage": "https://github.com/karoldydo/eda-nodejs-example#readme",
+  "bugs": {
+    "url": "https://github.com/karoldydo/eda-nodejs-example/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karoldydo/eda-nodejs-example.git"
+  },
+  "license": "MIT",
+  "author": "Karol Dydo",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc --noEmit && tsup",
+    "lint": "eslint --config ./eslint.config.mjs --fix",
+    "pre-commit": "lint-staged",
+    "prepare": "husky",
+    "prettier": "prettier --write . --cache --cache-location=./node_modules/.cache/prettier",
+    "start": "tsx src/index.ts",
+    "watch": "tsx watch src/index.ts"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "http-errors": "^2.0.0",
+    "lodash-es": "^4.17.21"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.28.0",
+    "@types/express": "^5.0.3",
+    "@types/http-errors": "^2.0.5",
+    "@types/lodash-es": "^4.17.12",
+    "@types/node": "^22.15.30",
+    "eslint": "^9.28.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-perfectionist": "^4.14.0",
+    "globals": "^16.2.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.0",
+    "prettier": "^3.5.3",
+    "prettier-plugin-organize-attributes": "^1.0.0",
+    "prettier-plugin-packagejson": "^2.5.14",
+    "prettier-plugin-sort-json": "^4.1.1",
+    "tsup": "^8.5.0",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.33.1",
+    "winston": "^3.17.0"
+  }
+}

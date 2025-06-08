@@ -1,0 +1,13 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "outDir": "./dist/out-tsc",
+    "strict": true,
+    "target": "ESNext"
+  },
+  "include": ["src/**/*.ts"]
+}

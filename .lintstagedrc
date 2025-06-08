@@ -1,0 +1,3 @@
+{
+  "*.{ts,mjs}": ["npm run prettier", "npm run lint"]
+}
