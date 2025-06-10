@@ -1,15 +1,31 @@
+import { random } from 'lodash-es';
+
 import { ServiceEventBus } from '../core/event-bus';
-import { isOrder } from '../core/helper';
+import { isOrderModel } from '../core/helpers';
 import logger from '../core/logger';
 
-const event = ServiceEventBus.getInstance();
+class OrderService {
+  private static serviceEventBus: ServiceEventBus;
 
-event.on('PaymentProcessed', (order: unknown) => {
-  if (isOrder(order)) {
-    logger.info(`📝  [OrderService] Order ${order.id} payment successful. Updating order status to "Paid"`);
-
-    setTimeout(() => {
-      logger.info(`📬  [OrderService] Order ${order.id} status updated to "Paid"`);
-    }, 2000);
+  static initialize(serviceEventBus: ServiceEventBus) {
+    this.serviceEventBus = serviceEventBus;
+    this.setPaymentProcessedListener();
   }
-});
+
+  private static setPaymentProcessedListener() {
+    this.serviceEventBus.on('PaymentProcessed', (order: unknown) => {
+      if (isOrderModel(order)) {
+        logger.info(`📝  [OrderService] Order ${order.id} payment successful. Updating order status to "Paid"`);
+
+        setTimeout(
+          () => {
+            logger.info(`📬  [OrderService] Order ${order.id} status updated to "Paid"`);
+          },
+          random(500, 1500)
+        );
+      }
+    });
+  }
+}
+
+export { OrderService };

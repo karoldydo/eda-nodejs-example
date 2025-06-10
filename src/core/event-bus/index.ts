@@ -1,28 +1,36 @@
 import { EventEmitter } from 'node:events';
 
+import { OrderModel } from '../../models';
 import logger from '../logger';
+
+interface EventMap {
+  OrderPlaced: OrderModel;
+  PaymentProcessed: OrderModel;
+  StockFailed: OrderModel;
+  StockReserved: OrderModel;
+}
 
 class ServiceEventBus extends EventEmitter {
   private static instance: ServiceEventBus;
 
-  private constructor() {
+  constructor() {
     super();
   }
 
-  public static getInstance(): ServiceEventBus {
+  static getInstance(): ServiceEventBus {
     if (!ServiceEventBus.instance) {
       ServiceEventBus.instance = new ServiceEventBus();
     }
     return ServiceEventBus.instance;
   }
 
-  override emit(event: string | symbol, ...args: unknown[]): boolean {
-    logger.info(`🚀  [ServiceEventBus] Emitting event: ${event.toString()} with args: ${JSON.stringify(args)}`);
-    return super.emit(event, ...args);
+  override emit<K extends keyof EventMap>(event: K, payload: EventMap[K]): boolean {
+    logger.info(`🚀  [ServiceEventBus] Emitting event: ${event} with payload: ${JSON.stringify(payload)}`);
+    return super.emit(event, payload);
   }
 
-  override on(event: string | symbol, listener: (...args: unknown[]) => void): this {
-    logger.info(`👂  [ServiceEventBus] Listening for event: ${event.toString()}`);
+  override on<K extends keyof EventMap>(event: K, listener: (payload: EventMap[K]) => void): this {
+    logger.info(`👂  [ServiceEventBus] Listening for event: ${event}`);
     return super.on(event, listener);
   }
 }

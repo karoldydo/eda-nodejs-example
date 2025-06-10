@@ -1,16 +1,32 @@
+import { random } from 'lodash-es';
+
 import { ServiceEventBus } from '../core/event-bus';
-import { isOrder } from '../core/helper';
+import { isOrderModel } from '../core/helpers';
 import logger from '../core/logger';
 
-const event = ServiceEventBus.getInstance();
+class PaymentService {
+  private static serviceEventBus: ServiceEventBus;
 
-event.on('StockReserved', (order: unknown) => {
-  if (isOrder(order)) {
-    logger.info(`💸  [PaymentService] Processing payment for order: ${JSON.stringify(order)}`);
-
-    setTimeout(() => {
-      logger.info(`✅  [PaymentService] Payment processed for order: ${JSON.stringify(order)}`);
-      event.emit('PaymentProcessed', order);
-    }, 3000);
+  static initialize(serviceEventBus: ServiceEventBus) {
+    this.serviceEventBus = serviceEventBus;
+    this.setStockReservedListener();
   }
-});
+
+  private static setStockReservedListener() {
+    this.serviceEventBus.on('StockReserved', (order: unknown) => {
+      if (isOrderModel(order)) {
+        logger.info(`💸  [PaymentService] Processing payment for order: ${JSON.stringify(order)}`);
+
+        setTimeout(
+          () => {
+            logger.info(`✅  [PaymentService] Payment processed for order: ${JSON.stringify(order)}`);
+            this.serviceEventBus.emit('PaymentProcessed', order);
+          },
+          random(500, 1500)
+        );
+      }
+    });
+  }
+}
+
+export { PaymentService };
