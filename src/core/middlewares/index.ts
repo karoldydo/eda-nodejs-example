@@ -1,1 +1,1 @@
-export * from './validate-schema.middleware';
+export * from './body-schema-validator.middleware';

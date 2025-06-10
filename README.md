@@ -24,8 +24,8 @@ root/
 │   │   └── logger/
 │   │       └── index.ts
 │   ├── middlewares/
-│   │   ├── index.ts
-│   │   └── validate-schema.middleware.ts
+│   │   ├── body-schema-validator.middleware.ts
+│   │   └── index.ts
 │   ├── models/
 │   │   ├── index.ts
 │   │   └── order.model.ts
